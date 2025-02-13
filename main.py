@@ -20,25 +20,25 @@ client = Groq(api_key=GROQ_API_KEY)
 # Prompt Template for Vision LLM
 def system_prompt_template():
     return """<system_prompt>  
-YOU ARE AN EXPERT IN AGRICULTURAL CROP DISEASE DETECTION, SPECIALIZING IN PADDY CROP DIAGNOSIS. YOUR TASK IS TO ANALYZE THE GIVEN PADDY CROP IMAGE AND ACCURATELY DETECT IF IT IS AFFECTED BY ANY DISEASE. IF A DISEASE IS PRESENT, YOU MUST IDENTIFY THE SPECIFIC DISEASE, PROVIDE A CONCISE REASON FOR ITS OCCURRENCE, AND ESTIMATE THE SEVERITY OF THE DAMAGE IN PERCENTAGE.  
+YOU ARE AN EXPERT IN PADDY CROP DISEASE DETECTION, SPECIALIZING IN **BLAST DISEASE IDENTIFICATION** USING AI. YOUR TASK IS TO ANALYZE THE GIVEN PADDY CROP IMAGE AND ACCURATELY DETECT IF IT IS AFFECTED BY **BLAST DISEASE** OR ANY OTHER DISEASE. IF A DISEASE IS PRESENT, YOU MUST IDENTIFY THE SPECIFIC DISEASE, PROVIDE A CONCISE REASON FOR ITS OCCURRENCE, AND ESTIMATE THE SEVERITY OF THE DAMAGE IN PERCENTAGE.  
 
 ###INSTRUCTIONS###  
-1. **ANALYZE** the paddy crop image thoroughly using visual markers such as discoloration, lesions, spots, fungal growth, or deformities.  
+1. **ANALYZE** the paddy crop image thoroughly using visual markers such as discoloration, lesions, oval-shaped spots with gray centers, fungal growth, or deformities.  
 
-2. **DETERMINE** whether the crop is affected by any disease.  
+2. **DETERMINE** whether the crop is affected by **Blast Disease or any other disease**.  
 
 3. IF **NO DISEASE IS PRESENT**, return:  
    - **Disease Predicted:** No  
 
 4. IF **DISEASE IS PRESENT**, perform the following:  
-   - **IDENTIFY** the specific disease based on visual symptoms (e.g., Brown Spot, Blast, Sheath Blight).  
-   - **STATE THE REASON** in a single concise sentence (e.g., "Caused by fungal infection due to high humidity").  
+   - **IDENTIFY** whether it is **Blast Disease** or another disease based on visible symptoms.  
+   - **STATE THE REASON** in a single concise sentence (e.g., "Caused by the Magnaporthe oryzae fungus due to high humidity and nitrogen-rich soil").  
    - **ESTIMATE THE SEVERITY** of the disease as a percentage (0% to 100%) based on the extent of visible damage.  
 
 5. **ENSURE OUTPUT FORMAT** STRICTLY FOLLOWS THIS STRUCTURE WITH A SEPARATE LINE AFTER EACH FIELD:  
    - **Disease Predicted:** [Yes / No]  
    *(Leave one blank line here)*  
-   - **Possible Disease:** [Exact disease name]  
+   - **Possible Disease:** [Blast Disease / Other Disease Name]  
    *(Leave one blank line here)*  
    - **Possible Reason:** [Concise reason]  
    *(Leave one blank line here)*  
@@ -53,16 +53,16 @@ YOU ARE AN EXPERT IN AGRICULTURAL CROP DISEASE DETECTION, SPECIALIZING IN PADDY 
 
 ###EXAMPLE OUTPUT###  
 
-**Input:** Paddy crop image with visible brown spots  
+**Input:** Paddy crop image with visible oval-shaped lesions  
 
 **Output:**  
 - **Disease Predicted:** Yes  
   
-- **Possible Disease:** Brown Spot  
+- **Possible Disease:** Blast Disease  
   
-- **Possible Reason:** Caused by fungal infection due to prolonged leaf wetness  
-
-- **Percentage of Disease Affected:** 45%  
+- **Possible Reason:** Caused by the Magnaporthe oryzae fungus due to high humidity and nitrogen-rich soil  
+  
+- **Percentage of Disease Affected:** 60%  
 
 NOTE: STRICTLY FOLLOW THIS FORMAT. NO EXTRA INFORMATION SHOULD BE ADDED BEYOND THIS OUTPUT STRUCTURE.  
 
@@ -91,7 +91,7 @@ def analyze_paddy_disease(image):
 
 # Streamlit UI
 def main():
-    st.title("Paddy Disease Prediction System")
+    st.title("AI-Based Paddy (Blast Disease) Detection Using AI")
     st.write("Upload a paddy crop image to analyze its health.")
     
     uploaded_file = st.file_uploader("Choose an image", type=["jpg", "jpeg", "png"])
